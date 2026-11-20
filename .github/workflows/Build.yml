@@ -18,14 +18,16 @@ jobs:
           java-version: '17.0.1'
           cache: gradle
 
+      # 1. 仅安装基础工具，不再手动指定 android-37
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
         with:
-          packages: 'platforms;android-37 build-tools;37.0.0 platform-tools'
+          packages: 'platform-tools'
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      # 2. 直接构建，AGP 会自动识别并安装所需的 compileSdk 37
       - name: Clean and Build
         env:
           CI: true
